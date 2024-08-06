@@ -1,5 +1,5 @@
 #include "Renderer.h"
-
+/*
 Renderer::Renderer(sf::RenderWindow& wnd)
 	:m_window(wnd)
 {
@@ -15,3 +15,4 @@ void Renderer::renderLine(const sf::Vector2f& vertex1, const sf::Vector2f& verte
     };
     this->m_window.draw(line, 2, sf::Lines);
 }
+*/

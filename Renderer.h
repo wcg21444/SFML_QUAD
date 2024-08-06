@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include "config.h"
-
+/*
 template<typename T>
 concept drawable = requires(sf::RenderWindow & wnd, T & obj) { wnd.draw(obj); };
 
@@ -55,3 +54,4 @@ inline void Renderer::renderEntityTransformation(T_Entity& entity,Func func)//×ø
 	shape.setPosition(shape.getPosition() / M2P);
 	shape.setOrigin(shape.getOrigin() / M2P);
 }
+*/

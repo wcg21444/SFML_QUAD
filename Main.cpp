@@ -2,9 +2,14 @@
 #include "Grid.h"
 #include "Object.h"
 #include "Physics.h"
+#include "Quadtree.h"
+#include "Base.h"
 int main()
 {
     Physics::dt = (float)1/60;
+
+    Random<float> rnd_pos_x(650.f, 1000.f);
+    Random<float> rnd_pos_y(250.f, 600.f);
 
     App app;
     app.createWindow(1920, 1080, "QUAD");
@@ -14,13 +19,14 @@ int main()
     
     std::vector<Object*> boxes;
 
-    std::vector<Box> boxes2;
 
-    for(int i = 1;i<=10;++i)
+    for(int i = 1;i<=360;++i)
     {
-        boxes.emplace_back(new Box(sf::Vector2f(25 * i, 25 * i), sf::FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(25, 25))));
-        boxes2.push_back(Box(sf::Vector2f(25 * i, 25 * i), sf::FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(25, 25))));
+        boxes.emplace_back(new Box(sf::Vector2f(rnd_pos_x.getNum(),rnd_pos_y.getNum()), sf::FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(5, 5))));
     }
+
+    Quadtree quadTree(boxes, 10/*最大深度*/, 2/*最多物体个数*/, sf::Rect<float>(sf::Vector2f(400,200),sf::Vector2f(800,800.f)));
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -48,15 +54,13 @@ int main()
         window.clear(sf::Color(66, 66, 66, 255));
 
         g.draw(window);
+        quadTree.draw(window);
         for (auto& box : boxes)
         {
             box->update(app);
             box->draw(window);
         }
-        for (auto& box : boxes2)
-        {
-            box.update(app);
-        }
+        
         window.display();
     }
 

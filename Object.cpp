@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "App.h"
+#include "Base.h"
 Box::Box(sf::Vector2f center_position, sf::FloatRect rect)
 {
 	shape = sf::RectangleShape(rect.getSize());
@@ -7,10 +8,10 @@ Box::Box(sf::Vector2f center_position, sf::FloatRect rect)
 	origin.x /= 2;
 	origin.y /= 2;
 	shape.setOrigin(origin);
-	shape.setPosition(center_position);
-	shape.setFillColor(sf::Color::Red);
+	physics.setPosition(center_position, this);
+	shape.setFillColor(sf::Color::Green);
 
-	physics.radius = sqrt(origin.x * origin.x + origin.y * origin.y);
+	bound_box = sf::Rect<float>(center_position - rect.getSize() / 2, rect.getSize());
 }
 
 void Box::draw(sf::RenderWindow& wnd)
@@ -21,15 +22,18 @@ void Box::draw(sf::RenderWindow& wnd)
 void Box::update(App& app)
 {
 	auto& wnd = app.getWindow();
-	physics.setAccelerate(rnd_x.getNum()/2000, rnd_y.getNum()/2000);
+	physics.setAccelerate(rnd_x.getNum()/160, rnd_y.getNum() / 90);
 
-	physics.updatePosition(this);
+	physics.boundrayRebound(sf::Rect<float>(sf::Vector2f(0.f,0.f), (sf::Vector2f)wnd.getSize()));
+	
 	physics.updateVelocity();
+	physics.updatePosition(this);
+
 }
 
 void Box::setPosition(sf::Vector2f pos)
 {
-	this->physics.position = pos;
+	Object::setPosition(pos);
 
 	//TODO: Transformation
 	shape.setPosition(pos);
@@ -42,4 +46,10 @@ Object::Object()
 
 Object::~Object()
 {
+}
+
+void Object::setPosition(sf::Vector2f pos)
+{	
+	physics.position_old = physics.position;
+	physics.position = pos;
 }

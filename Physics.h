@@ -9,10 +9,9 @@ class Physics
 public:
 	static float dt;
 public:
-	float radius = 0.f;//°üÎ§È¦°ë¾¶
-
 	float mass = 0.f;
 
+private:
 	//Displcements
 	sf::Vector2f position = { 0.f,0.f };
 	sf::Vector2f velocity = { 0.f,0.f };
@@ -32,8 +31,18 @@ public:
 	void setAccelerate(sf::Vector2f acc);
 	void setAccelerate(float x, float y);
 
+	inline const sf::Vector2f getPosition() { return position; }
+	inline const sf::Vector2f getPositionOld() { return position_old; }
+	inline const sf::Vector2f getVelocity() { return velocity; }
+	inline const sf::Vector2f getVelocityOld() { return velocity_old; }
+	inline const sf::Vector2f getAccelerate() { return accelerate; }
+	inline const sf::Vector2f getAccelerateOld() { return accelerate_old; }
+
+
 	void updatePosition(Object* object);
 	void updateVelocity();
+
+	void boundrayRebound(sf::Rect<float> boundary);
 
 };
 

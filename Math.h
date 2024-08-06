@@ -1,4 +1,5 @@
 #pragma once
+
 #include <math.h>
 #include <SFML/Graphics.hpp>
 
@@ -18,12 +19,12 @@ public:
 
 };
 
-Ratio operator*(Ratio r1, Ratio r2)
+inline Ratio operator*(Ratio r1, Ratio r2)
 {
 	return Ratio(r1.getNum() * r2.getNum(), r1.getDen() * r2.getDen());
 }
 
-Ratio operator/(Ratio r1, Ratio r2)
+inline Ratio operator/(Ratio r1, Ratio r2)
 {
 	return Ratio(r1.getNum() * r2.getDen(), r1.getDen() * r2.getNum());
 }
@@ -31,21 +32,21 @@ Ratio operator/(Ratio r1, Ratio r2)
 template<typename Ty>
 concept Vec = (bool)std::is_same<Ty, sf::Vector2f>()|| (bool)std::is_same<Ty, sf::Vector2i >()||(bool)std::is_same<Ty, sf::Vector2u>();
 template <Vec Ty_vec>
-Ty_vec operator*(Ty_vec v_real, Ratio r_real)
+inline Ty_vec operator*(Ty_vec v_real, Ratio r_real)
 {
 	v_real.x = v_real.x * r_real;
 	v_real.y = v_real.y * r_real;
 	return v_real;
 }
 template <Vec Ty_vec2f>
-Ty_vec2f operator*(Ratio r_real, Ty_vec2f v_real)
+inline Ty_vec2f operator*(Ratio r_real, Ty_vec2f v_real)
 {
 	v_real.x = v_real.x * r_real;
 	v_real.y = v_real.y * r_real;
 	return v_real;
 }
 template <Vec Ty_vec2f>
-Ty_vec2f operator/(Ty_vec2f v_real, Ratio r_real)
+inline Ty_vec2f operator/(Ty_vec2f v_real, Ratio r_real)
 {
 	v_real.x = v_real.x / r_real;
 	v_real.y = v_real.y / r_real;

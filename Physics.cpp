@@ -1,7 +1,8 @@
 #include "Physics.h"
 #include "Object.h"
-#include "Math.h"
 #include <iostream>
+
+#include "Base.h"
 float Physics::dt;
 
 
@@ -48,4 +49,33 @@ void Physics::updateVelocity()
 	sf::Vector2f v = velocity;
 	v += (accelerate + accelerate_old) * dt / 2;
 	setVelocity(v);
+}
+
+void Physics::boundrayRebound(sf::Rect<float> boundary)
+{
+
+	if (position.x < boundary.left)
+	{
+		sf::Vector2f new_vel(velocity);
+		new_vel.x = -new_vel.x;
+		setVelocity(new_vel);
+	}
+	if (position.x > boundary.left+boundary.width )
+	{
+		sf::Vector2f new_vel(velocity);
+		new_vel.x = -new_vel.x;
+		setVelocity(new_vel);
+	}
+	if (position.y < boundary.top)
+	{
+		sf::Vector2f new_vel(velocity);
+		new_vel.y = -new_vel.y;
+		setVelocity(new_vel);
+	}
+	if (position.y > boundary.top+boundary.height )
+	{
+		sf::Vector2f new_vel(velocity);
+		new_vel.y = -new_vel.y;
+		setVelocity(new_vel);
+	}
 }

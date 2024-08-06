@@ -8,18 +8,18 @@ class App;
 
 class Object
 {
+friend QuadtreeNode;
 protected:
-	QuadtreeNode* masterNode;//所属节点
 	Physics physics;
-
+	QuadtreeNode* masterNode;//所属节点
+	sf::Rect<float> bound_box;
 public:
 	Object();
 	virtual ~Object();
 	virtual void update(App& app) = 0;
-	virtual void setPosition(sf::Vector2f pos) = 0;
+	virtual void setPosition(sf::Vector2f pos);
 	virtual void draw(sf::RenderWindow& wnd) = 0;
-	inline void setMasterNode(QuadtreeNode* node) { masterNode = node; }
-
+	inline  Physics& getPhysics() { return physics; }
 };
 
 class Box :public Object
